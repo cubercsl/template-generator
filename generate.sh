@@ -15,9 +15,9 @@ do
     if [ -f $SRCDIR/$file ]; then
         echo "\newpage" >> $OUTPUTDIR/$OUTPUTMD
         echo >> $OUTPUTDIR/$OUTPUTMD
-        cat src"/"$file >> $OUTPUTDIR/$OUTPUTMD
+        cat $SRCDIR/$file >> $OUTPUTDIR/$OUTPUTMD
     else
-        cp -r src"/"$file $OUTPUTDIR/$file
+        cp -r $SRCDIR/$file $OUTPUTDIR/$file
     fi
 done
 
