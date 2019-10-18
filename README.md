@@ -5,11 +5,12 @@
 - [TexLive](http://tug.org/texlive/)
 - [Pandoc](https://www.pandoc.org/)
 - [Pygments](http://pygments.org/)
+- [pandoc-minted](https://pypi.org/project/pandoc-minted/)
 
 ```bash
 $ sudo apt install pandoc texlive-latex-recommended \
         texlive-latex-extra texlive-fonts-recommended
-$ pip install Pygments
+$ pip install Pygments pandoc-minted
 ```
 
 ## 使用方式

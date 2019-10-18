@@ -3,19 +3,20 @@ FILENAME=template
 SRCDIR=src
 OUTPUTDIR=output
 
-OUTPUTMD=$FILENAME.md
-OUTPUTTEX=$FILENAME.tex
-OUTPUTPDF=$FILENAME.pdf
+MARKDOWN=$FILENAME.md
+TEX=$FILENAME.tex
+PDF=$FILENAME.pdf
 
+rm -rf $OUTPUTDIR
 mkdir -p $OUTPUTDIR
 
-cat header.md > $OUTPUTDIR/$OUTPUTMD
+cat header.md > $OUTPUTDIR/$MARKDOWN
 for file in `ls $SRCDIR`
 do
     if [ -f $SRCDIR/$file ]; then
-        echo "\newpage" >> $OUTPUTDIR/$OUTPUTMD
-        echo >> $OUTPUTDIR/$OUTPUTMD
-        cat $SRCDIR/$file >> $OUTPUTDIR/$OUTPUTMD
+        echo "\newpage" >> $OUTPUTDIR/$MARKDOWN
+        echo >> $OUTPUTDIR/$MARKDOWN
+        cat $SRCDIR/$file >> $OUTPUTDIR/$MARKDOWN
     else
         cp -r $SRCDIR/$file $OUTPUTDIR/$file
     fi
@@ -23,13 +24,13 @@ done
 
 cd $OUTPUTDIR
 
-pandoc -F pandoc-minted -s $OUTPUTMD -o $OUTPUTTEX --toc-depth=2
-sed -i '/^\\maketitle$/i \\\begin{titlepage}' $OUTPUTTEX
-sed -i '/^\\maketitle$/a \\\thispagestyle{empty}\n\\\end{titlepage}' $OUTPUTTEX
+pandoc -F pandoc-minted -s $MARKDOWN -o $TEX --toc-depth=2
+sed -i '/^\\maketitle$/i \\\begin{titlepage}' $TEX
+sed -i '/^\\maketitle$/a \\\thispagestyle{empty}\n\\\end{titlepage}' $TEX
 
-xelatex -synctex=1 -interaction=nonstopmode --shell-escape $OUTPUTTEX
-xelatex -synctex=1 -interaction=nonstopmode --shell-escape $OUTPUTTEX
-xelatex -synctex=1 -interaction=nonstopmode --shell-escape $OUTPUTTEX
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape $TEX
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape $TEX
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape $TEX
 
 if [ $? -ne 0 ]; then
     echo "error"
@@ -38,7 +39,7 @@ fi
 
 cd -
 
-mv $OUTPUTDIR/$OUTPUTPDF $OUTPUTPDF >/dev/null 2>&1
+mv $OUTPUTDIR/$PDF $PDF >/dev/null 2>&1
 rm -r $OUTPUTDIR >/dev/null 2>&1
 
 echo "done"
